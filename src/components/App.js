@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles'
 
 import Header from './Header'
 import Content from './Content'
+import Drawer from './Drawer'
 
 const styles = {
   root: {
@@ -17,6 +18,7 @@ class App extends React.Component {
     return (
       <div className={classes.root}>
         <Header />
+        <Drawer />
         <Content />
       </div>
     )

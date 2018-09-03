@@ -5,7 +5,7 @@ import Editor from 'draft-js-plugins-editor'
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
 import { withStyles } from '@material-ui/core/styles'
 
-import { setProblemContent } from '../../actions/App'
+import { setProblemContent } from '../../actions/'
 
 const plugins = [createMarkdownPlugin()]
 const emptyState = EditorState.createEmpty()
@@ -56,7 +56,13 @@ class Problem extends React.Component {
 
   render() {
     const { classes, content } = this.props
-    const editorState = EditorState.createWithContent(convertFromRaw(content))
+
+    let editorState
+    if (content) {
+      editorState = EditorState.createWithContent(convertFromRaw(content))
+    } else {
+      editorState = emptyState
+    }
 
     return (
       <div className={classes.root}>
@@ -84,7 +90,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  content: state.app.problem,
+  // content: state.app.problem,
 })
 
 export default withStyles(styles)(

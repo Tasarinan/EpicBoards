@@ -9,6 +9,7 @@ let win
 
 function createWindow() {
   win = new BrowserWindow({ width: 1440, height: 900 })
+
   win.loadFile('index.html')
 
   win.on('resize', () => {

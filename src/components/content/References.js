@@ -11,7 +11,7 @@ import {
   setUrlInput,
   deleteReference,
   submitReference,
-} from '../../actions/references'
+} from '../../actions/'
 
 const styles = {
   root: {
@@ -99,8 +99,10 @@ class References extends React.Component {
   }
 
   render() {
-    const { classes, references } = this.props
-    const { records, labelInput, urlInput } = references
+    const { classes, globalUi } = this.props
+    const { labelInput, urlInput } = globalUi
+    // const { records,  } = references
+    const records = []
 
     return (
       <div className={classes.root}>
@@ -175,7 +177,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 const mapStateToProps = state => ({
-  references: state.references,
+  globalUi: state.globalUi,
 })
 
 export default withStyles(styles)(

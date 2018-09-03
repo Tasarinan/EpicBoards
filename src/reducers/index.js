@@ -1,11 +1,13 @@
 import { combineReducers } from 'redux'
 
-import app from './app'
-import references from './references'
+import appSettings from './appSettings'
+import epics from './epics'
+import globalUi from './globalUi'
 
 const rootReducer = combineReducers({
-  app,
-  references,
+  appSettings,
+  epics,
+  globalUi,
 })
 
 export default rootReducer

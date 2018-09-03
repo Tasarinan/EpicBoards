@@ -14,11 +14,7 @@ const AppReducer = (state = initialState, action) => {
         ...state,
         records: [...records, payload],
       }
-    case 'SET_LABEL_INPUT':
-      return {
-        ...state,
-        labelInput: payload,
-      }
+
     case 'DELETE_REFERENCE':
       const newRecords = [
         ...records.slice(0, payload),
@@ -27,11 +23,6 @@ const AppReducer = (state = initialState, action) => {
       return {
         ...state,
         records: newRecords,
-      }
-    case 'SET_URL_INPUT':
-      return {
-        ...state,
-        urlInput: payload,
       }
     case 'CLEAR_REFERENCES':
       return {

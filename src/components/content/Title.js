@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 
-import { setTitleContent } from '../../actions/App'
+import { setEpicTitle } from '../../actions/'
 
 const styles = {
   root: {
@@ -31,9 +31,10 @@ class Title extends React.Component {
     this.onChange = this.onChange.bind(this)
   }
 
-  onChange(e) {
-    const { setTitleContent } = this.props
-    setTitleContent(e.target.value)
+  onChange({ target }) {
+    const { setEpicTitle, globalUi } = this.props
+    const { selectedEpic: id } = globalUi
+    setEpicTitle({ id, content: target.value })
   }
 
   render() {
@@ -53,13 +54,14 @@ class Title extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  setTitleContent: content => {
-    dispatch(setTitleContent(content))
+  setEpicTitle: params => {
+    dispatch(setEpicTitle(params))
   },
 })
 
-const mapStateToProps = state => ({
-  content: state.app.title,
+const mapStateToProps = (state, ownProps) => ({
+  globalUi: state.globalUi,
+  content: state.epics[state.globalUi.selectedEpic].title,
 })
 
 export default withStyles(styles)(
