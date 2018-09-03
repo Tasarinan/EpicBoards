@@ -7,8 +7,8 @@ import IconButton from '@material-ui/core/IconButton'
 import Icon from '@material-ui/core/Icon'
 
 import {
-  setLabelInput,
-  setUrlInput,
+  setReferenceLabelInput,
+  setReferenceUrlInput,
   deleteReference,
   submitReference,
 } from '../../actions/'
@@ -66,11 +66,6 @@ class References extends React.Component {
     this.onKeyDown = this.onKeyDown.bind(this)
   }
 
-  onLabelChange(e) {
-    const { setLabelInput, clearReferences } = this.props
-    setLabelInput(e.target.value)
-  }
-
   onKeyDown(e) {
     if (e.keyCode === 13) {
       this.submitReference(e)
@@ -78,8 +73,14 @@ class References extends React.Component {
   }
 
   handleDelete(e, index) {
-    const { deleteReference } = this.props
-    deleteReference(index)
+    const { deleteReference, globalUi } = this.props
+    const { selectedEpic } = globalUi
+    deleteReference({ selectedEpic, id: index })
+  }
+
+  onLabelChange(e) {
+    const { setLabelInput } = this.props
+    setLabelInput(e.target.value)
   }
 
   onUrlChange(e) {
@@ -93,29 +94,26 @@ class References extends React.Component {
 
   submitReference(e) {
     e.preventDefault()
-    const { submitReference, references } = this.props
-    const { labelInput, urlInput } = references
-    submitReference({ labelInput, urlInput })
+    const { submitReference, references, globalUi } = this.props
+    submitReference(globalUi)
   }
 
   render() {
-    const { classes, globalUi } = this.props
+    const { classes, globalUi, references } = this.props
     const { labelInput, urlInput } = globalUi
-    // const { records,  } = references
-    const records = []
 
     return (
       <div className={classes.root}>
         <h2 className={classes.title}>References</h2>
         <div className={classes.referencesContainer}>
-          {records.map((reference, index) => {
+          {references.map((reference, index) => {
             return (
               <Chip
-                label={reference.labelInput}
-                onDelete={(e) => this.handleDelete(e, index)}
-                onClick={(e) => this.openPage(reference.urlInput)}
+                label={reference.label}
+                onDelete={e => this.handleDelete(e, index)}
+                onClick={e => this.openPage(reference.url)}
                 className={classes.chip}
-                key={`${reference.labelInput}-${index}`}
+                key={`${reference.label}-${index}`}
                 color="primary"
               />
             )
@@ -151,7 +149,10 @@ class References extends React.Component {
                 },
               }}
             />
-            <IconButton className={classes.button} onClick={this.submitReference}>
+            <IconButton
+              className={classes.button}
+              onClick={this.submitReference}
+            >
               <Icon>add_circle</Icon>
             </IconButton>
           </form>
@@ -166,10 +167,10 @@ const mapDispatchToProps = dispatch => ({
     dispatch(submitReference(payload))
   },
   setLabelInput: payload => {
-    dispatch(setLabelInput(payload))
+    dispatch(setReferenceLabelInput(payload))
   },
   setUrlInput: payload => {
-    dispatch(setUrlInput(payload))
+    dispatch(setReferenceUrlInput(payload))
   },
   deleteReference: payload => {
     dispatch(deleteReference(payload))
@@ -178,6 +179,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = state => ({
   globalUi: state.globalUi,
+  references: state.epics[state.globalUi.selectedEpic].references,
 })
 
 export default withStyles(styles)(

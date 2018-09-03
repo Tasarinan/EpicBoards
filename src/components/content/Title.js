@@ -59,7 +59,7 @@ const mapDispatchToProps = dispatch => ({
   },
 })
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = state => ({
   globalUi: state.globalUi,
   content: state.epics[state.globalUi.selectedEpic].title,
 })

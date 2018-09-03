@@ -6,7 +6,7 @@ const emptyEpic = {
   title: '',
   phases: [],
   problem: '',
-  references: []
+  references: [],
 }
 
 const EpicReducer = (state = initialState, { type, payload }) => {
@@ -22,10 +22,30 @@ const EpicReducer = (state = initialState, { type, payload }) => {
         },
       ]
     case 'SET_EPIC_TITLE':
-      console.log(state)
       return update(state, {
         [payload.id]: {
           title: { $set: payload.content },
+        },
+      })
+    case 'CREATE_REFERENCE':
+      return update(state, {
+        [payload.selectedEpic]: {
+          references: {
+            $push: [
+              {
+                label: payload.referenceLabel,
+                url: payload.referenceUrl,
+              },
+            ],
+          },
+        },
+      })
+    case 'DELETE_REFERENCE':
+      return update(state, {
+        [payload.selectedEpic]: {
+          references: {
+            $splice: [[payload.id, 1]],
+          },
         },
       })
     default:
