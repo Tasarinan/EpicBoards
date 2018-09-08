@@ -1,10 +1,13 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 
 import Phases from './content/Phases'
 import Problem from './content/Problem'
 import References from './content/References'
 import Title from './content/Title'
+
+import UnselectedEpic from './states/UnselectedEpic'
 
 const styles = {
   root: {
@@ -54,7 +57,9 @@ const styles = {
 
 class Content extends React.Component {
   render() {
-    const { classes } = this.props
+    const { classes, epic } = this.props
+
+    if (!epic) { return <UnselectedEpic /> }
 
     return (
       <div className={classes.root}>
@@ -78,4 +83,13 @@ class Content extends React.Component {
   }
 }
 
-export default withStyles(styles)(Content)
+const mapStateToProps = state => ({
+  epic: state.epics[state.globalUi.selectedEpic],
+})
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    {},
+  )(Content),
+)

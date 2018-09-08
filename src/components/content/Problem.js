@@ -1,11 +1,13 @@
 import React from 'react'
-import createMarkdownPlugin from 'draft-js-markdown-plugin'
 import { connect } from 'react-redux'
-import Editor from 'draft-js-plugins-editor'
+// DRAFT JS
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
+import Editor from 'draft-js-plugins-editor'
+import createMarkdownPlugin from 'draft-js-markdown-plugin'
+
 import { withStyles } from '@material-ui/core/styles'
 
-import { setProblemContent } from '../../actions/'
+import { setEpicProblem } from '../../actions/'
 
 const plugins = [createMarkdownPlugin()]
 const emptyState = EditorState.createEmpty()
@@ -45,9 +47,10 @@ class Problem extends React.Component {
 
   onChange(editorState) {
     this.setState({ editorState })
-    const { setProblemContent } = this.props
+    const { setEpicProblem, globalUi } = this.props
+    const { selectedEpic } = globalUi
     const rawEditorState = convertToRaw(editorState.getCurrentContent())
-    setProblemContent(rawEditorState)
+    setEpicProblem({ selectedEpic, content: rawEditorState })
   }
 
   onContainerClick(e) {
@@ -73,7 +76,10 @@ class Problem extends React.Component {
         >
           <Editor
             ref={c => (this._editor = c)}
-            editorState={EditorState.acceptSelection(editorState, this.state.editorState.getSelection())}
+            editorState={EditorState.acceptSelection(
+              editorState,
+              this.state.editorState.getSelection(),
+            )}
             onChange={this.onChange}
             plugins={plugins}
           />
@@ -83,14 +89,13 @@ class Problem extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setProblemContent: content => {
-    dispatch(setProblemContent(content))
-  },
-})
+const mapDispatchToProps = {
+  setEpicProblem,
+}
 
 const mapStateToProps = state => ({
-  // content: state.app.problem,
+  globalUi: state.globalUi,
+  content: state.epics[state.globalUi.selectedEpic].problem,
 })
 
 export default withStyles(styles)(
@@ -99,4 +104,3 @@ export default withStyles(styles)(
     mapDispatchToProps,
   )(Problem),
 )
-

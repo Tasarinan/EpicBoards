@@ -8,13 +8,12 @@ const Store = require('electron-store')
 let win
 
 function createWindow() {
-  win = new BrowserWindow({ width: 1440, height: 900 })
+  win = new BrowserWindow({ width: 1440, height: 900, show: false })
 
   win.loadFile('index.html')
 
-  win.on('resize', () => {
-    let { width, height } = win.getBounds()
-    store.set('windowBounds', { width, height })
+  win.once('ready-to-show', () => {
+    win.show()
   })
 
   win.on('closed', () => {

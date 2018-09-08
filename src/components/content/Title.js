@@ -33,8 +33,8 @@ class Title extends React.Component {
 
   onChange({ target }) {
     const { setEpicTitle, globalUi } = this.props
-    const { selectedEpic: id } = globalUi
-    setEpicTitle({ id, content: target.value })
+    const { selectedEpic } = globalUi
+    setEpicTitle({ selectedEpic, content: target.value })
   }
 
   render() {
@@ -53,11 +53,9 @@ class Title extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  setEpicTitle: params => {
-    dispatch(setEpicTitle(params))
-  },
-})
+const mapDispatchToProps = {
+  setEpicTitle,
+}
 
 const mapStateToProps = state => ({
   globalUi: state.globalUi,

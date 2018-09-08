@@ -58,11 +58,9 @@ class DenseAppBar extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  toggleDrawer: payload => {
-    dispatch(toggleDrawer(payload))
-  },
-})
+const mapDispatchToProps = {
+  toggleDrawer,
+}
 
 const mapStateToProps = state => ({
 })

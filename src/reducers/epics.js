@@ -11,20 +11,28 @@ const emptyEpic = {
 
 const EpicReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'CREATE_EPIC':
-      const count = state.length
-
+    case 'CREATE_EPIC_RECORD':
       return [
         ...state,
         {
-          id: count + 1,
+          id: payload,
           ...emptyEpic,
         },
       ]
+    case 'DELETE_EPIC':
+      return update(state, {
+        $splice: [[payload, 1]],
+      })
     case 'SET_EPIC_TITLE':
       return update(state, {
-        [payload.id]: {
+        [payload.selectedEpic]: {
           title: { $set: payload.content },
+        },
+      })
+    case 'SET_EPIC_PROBLEM':
+      return update(state, {
+        [payload.selectedEpic]: {
+          problem: { $set: payload.content },
         },
       })
     case 'CREATE_REFERENCE':

@@ -79,13 +79,13 @@ class References extends React.Component {
   }
 
   onLabelChange(e) {
-    const { setLabelInput } = this.props
-    setLabelInput(e.target.value)
+    const { setReferenceLabelInput } = this.props
+    setReferenceLabelInput(e.target.value)
   }
 
   onUrlChange(e) {
-    const { setUrlInput } = this.props
-    setUrlInput(e.target.value)
+    const { setReferenceUrlInput } = this.props
+    setReferenceUrlInput(e.target.value)
   }
 
   openPage(url) {
@@ -162,20 +162,12 @@ class References extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  submitReference: payload => {
-    dispatch(submitReference(payload))
-  },
-  setLabelInput: payload => {
-    dispatch(setReferenceLabelInput(payload))
-  },
-  setUrlInput: payload => {
-    dispatch(setReferenceUrlInput(payload))
-  },
-  deleteReference: payload => {
-    dispatch(deleteReference(payload))
-  },
-})
+const mapDispatchToProps = {
+  submitReference,
+  setReferenceLabelInput,
+  setReferenceUrlInput,
+  deleteReference,
+}
 
 const mapStateToProps = state => ({
   globalUi: state.globalUi,
