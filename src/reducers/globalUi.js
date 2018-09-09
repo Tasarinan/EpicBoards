@@ -1,6 +1,6 @@
 const initialState = {
   drawerOpen: false,
-  selectedEpic: undefined,
+  selectedEpic: 0,
   referenceLabel: '',
   referenceUrl: '',
 }

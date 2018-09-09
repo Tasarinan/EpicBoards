@@ -1,24 +1,35 @@
 {
-  "name": "epic-planner",
+  "name": "epic-epics",
   "version": "1.0.0",
-  "description": "",
+  "description": "Easily manage epics for agile teams",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "electron -r babel-register ."
+    "start": "electron -r babel-register .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder"
   },
-  "author": "",
-  "license": "ISC",
+  "build": {
+    "appId": "com.epicecpis.app",
+    "mac": {
+      "category": "epicecpis.app.type"
+    }
+  },
+  "author": "Xavier Hocquet",
+  "license": "Apache-2.0",
+  "postinstall": "electron-builder install-app-deps",
   "dependencies": {
     "@material-ui/core": "^1.5.1",
     "@material-ui/icons": "^2.0.3",
+    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
+    "babel-plugin-transform-es2015-function-name": "^6.24.1",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
     "babel-register": "^6.26.0",
     "draft-js": "^0.10.5",
     "draft-js-markdown-plugin": "^3.0.4",
     "draft-js-plugins-editor": "^2.1.1",
-    "electron": "^2.0.8",
     "electron-reload": "^1.2.5",
     "electron-store": "^2.0.0",
     "immutability-helper": "^2.7.1",
@@ -32,9 +43,8 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "babel-plugin-transform-es2015-arrow-functions": "^6.22.0",
-    "babel-plugin-transform-es2015-function-name": "^6.24.1",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "electron": "^2.0.8",
+    "electron-builder": "^20.28.4",
     "eslint": "^5.5.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
