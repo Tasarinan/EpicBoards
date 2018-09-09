@@ -1,18 +1,27 @@
 {
-  "name": "epic-epics",
-  "version": "1.0.0",
+  "name": "Epic_Epics",
+  "version": "1.0.1",
   "description": "Easily manage epics for agile teams",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron -r babel-register .",
     "pack": "electron-builder --dir",
-    "dist": "electron-builder"
+    "dist-mac": "electron-builder build --mac",
+    "dist-win": "electron-builder build --win",
+    "dist-linux": "electron-builder build --linux"
   },
   "build": {
     "appId": "com.epicecpis.app",
     "mac": {
-      "category": "epicecpis.app.type"
+      "category": "epicecpis.app.type",
+      "target": "dmg"
+    },
+    "win": {
+      "target": "nsis"
+    },
+    "linux": {
+      "target": "AppImage"
     }
   },
   "author": "Xavier Hocquet",

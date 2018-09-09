@@ -70,7 +70,7 @@ class DrawerComponent extends React.Component {
                 <ListItem
                   button
                   selected={selected}
-                  key={epic.id}
+                  key={`${epic.id}-${index}`}
                   onClick={() => this.selectEpic(index)}
                 >
                   <ListItemText primary={epic.title} />

@@ -8,7 +8,11 @@ const Store = require('electron-store')
 let win
 
 function createWindow() {
-  win = new BrowserWindow({ width: 1440, height: 900, show: false })
+  win = new BrowserWindow({
+    width: 1440,
+    height: 900,
+    show: false,
+  })
 
   win.loadFile('index.html')
 

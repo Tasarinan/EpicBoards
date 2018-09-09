@@ -12,14 +12,17 @@ import { toggleDrawer } from '../actions/'
 
 const styles = {
   root: {
+    height: '48px',
+    left: 0,
     position: 'fixed',
     right: 0,
-    left: 0,
-    height: '48px',
   },
   menuButton: {
     marginLeft: -18,
     marginRight: 10,
+  },
+  toolBar: {
+    backgroundColor: 'rgba(63, 81, 181, 0.9)',
   },
 }
 
@@ -40,7 +43,7 @@ class Header extends React.Component {
     return (
       <div className={classes.root}>
         <AppBar position="static">
-          <Toolbar variant="dense">
+          <Toolbar variant="dense" className={classes.toolBar}>
             <IconButton
               className={classes.menuButton}
               color="inherit"
