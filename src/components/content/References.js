@@ -15,7 +15,7 @@ import {
 
 const styles = {
   root: {
-    backgroundColor: 'rgba(244, 67, 54, 0.4)',
+    backgroundColor: 'rgba(79, 166, 156, 0.4)',
     borderTop: '1px solid black',
     height: '100%',
     display: 'flex',

@@ -1,9 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { createStore, applyMiddleware } from 'redux'
-import thunk from 'redux-thunk'
-import { persistStore, persistReducer } from 'redux-persist'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
+// Storage
+import { persistStore, persistReducer } from 'redux-persist'
 import createElectronStorage from 'redux-persist-electron-storage'
 import { PersistGate } from 'redux-persist/integration/react'
 

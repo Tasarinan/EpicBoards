@@ -7,6 +7,7 @@ const emptyEpic = {
   phases: [],
   problem: '',
   references: [],
+  goodBetterBest: ['', '', ''],
 }
 
 const EpicReducer = (state = initialState, { type, payload }) => {
@@ -23,6 +24,22 @@ const EpicReducer = (state = initialState, { type, payload }) => {
       return update(state, {
         $splice: [[payload, 1]],
       })
+    case 'DELETE_PHASE':
+      return update(state, {
+        [payload.selectedEpic]: {
+          phases: {
+            $splice: [[payload.index, 1]],
+          },
+        },
+      })
+
+      return update(state, {
+        [payload.selectedEpic]: {
+          phases: {
+            [payload.index]: { $set: payload.content },
+          },
+        },
+      })
     case 'SET_EPIC_TITLE':
       return update(state, {
         [payload.selectedEpic]: {
@@ -35,6 +52,31 @@ const EpicReducer = (state = initialState, { type, payload }) => {
           problem: { $set: payload.content },
         },
       })
+    case 'SET_EPIC_GBB_CONTENT':
+      return update(state, {
+        [payload.selectedEpic]: {
+          goodBetterBest: {
+            [payload.index]: { $set: payload.content },
+          },
+        },
+      })
+    case 'SET_EPIC_PHASE':
+      return update(state, {
+        [payload.selectedEpic]: {
+          phases: {
+            [payload.index]: { $set: payload.content },
+          },
+        },
+      })
+    case 'CREATE_PHASE': {
+      return update(state, {
+        [payload.selectedEpic]: {
+          phases: {
+            $push: [''],
+          },
+        },
+      })
+    }
     case 'CREATE_REFERENCE':
       return update(state, {
         [payload.selectedEpic]: {

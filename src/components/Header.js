@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -22,7 +23,7 @@ const styles = {
   },
 }
 
-class DenseAppBar extends React.Component {
+class Header extends React.Component {
   constructor(props) {
     super(props)
     this.onClickMenuIcon = this.onClickMenuIcon.bind(this)
@@ -62,12 +63,11 @@ const mapDispatchToProps = {
   toggleDrawer,
 }
 
-const mapStateToProps = state => ({
-})
-
 export default withStyles(styles)(
   connect(
-    mapStateToProps,
+    () => {
+      return {}
+    },
     mapDispatchToProps,
-  )(DenseAppBar),
+  )(Header),
 )

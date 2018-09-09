@@ -6,6 +6,7 @@ import Phases from './content/Phases'
 import Problem from './content/Problem'
 import References from './content/References'
 import Title from './content/Title'
+import GoodBetterBest from './content/GoodBetterBest'
 
 import UnselectedEpic from './states/UnselectedEpic'
 
@@ -40,8 +41,6 @@ const styles = {
     gridRowStart: 3,
   },
   goodBetterBest: {
-    backgroundColor: 'rgba(255, 152, 0, 0.4)',
-    borderLeft: '1px solid black',
     gridColumnEnd: 2,
     gridColumnStart: 2,
     gridRowEnd: 4,
@@ -59,7 +58,9 @@ class Content extends React.Component {
   render() {
     const { classes, epic } = this.props
 
-    if (!epic) { return <UnselectedEpic /> }
+    if (!epic) {
+      return <UnselectedEpic />
+    }
 
     return (
       <div className={classes.root}>
@@ -73,7 +74,7 @@ class Content extends React.Component {
           <References />
         </div>
         <div className={classes.goodBetterBest}>
-          <h2>Good/Better/Best</h2>
+          <GoodBetterBest />
         </div>
         <div className={classes.phases}>
           <Phases />

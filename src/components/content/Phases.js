@@ -1,98 +1,155 @@
-import createMarkdownPlugin from 'draft-js-markdown-plugin'
-import Editor from 'draft-js-plugins-editor'
 import React from 'react'
-import { EditorState, convertToRaw } from 'draft-js'
+import { connect } from 'react-redux'
+// DRAFT JS
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js'
+import Editor from 'draft-js-plugins-editor'
+import createMarkdownPlugin from 'draft-js-markdown-plugin'
+
 import { withStyles } from '@material-ui/core/styles'
 import Button from '@material-ui/core/Button'
 import Icon from '@material-ui/core/Icon'
 
+import { setEpicPhase, createPhase, deletePhase } from '../../actions/'
+
+const plugins = [createMarkdownPlugin()]
+const emptyState = EditorState.createEmpty()
+
 const styles = {
   root: {
-    backgroundColor: 'rgba(76, 175, 80, 0.4)',
+    backgroundColor: 'rgba(27, 132, 131, 0.5)',
     borderLeft: '1px solid black',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
   },
   title: {
     margin: 0,
-    textAlign: 'center',
     padding: '6px 0',
+    textAlign: 'center',
   },
   editorContainer: {
-    padding: '4px',
-    backgroundColor: 'rgb(244, 255, 232)',
+    backgroundColor: '#CDD7D6',
+    borderRadius: '4px',
     cursor: 'text',
+    margin: '0 6px 6px',
     overflowY: 'scroll',
-    margin: '12px 4px',
+    padding: '8px',
+    position: 'relative',
+  },
+  addButton: {
+    backgroundColor: 'rgba(46, 158, 46, 0.9)',
+    color: '#e6e6e6',
+    margin: '0 auto 8px',
+    '&:hover': {
+      backgroundColor: 'rgba(46, 158, 46, 0.9)',
+    },
+  },
+  deleteButton: {
+    cursor: 'pointer',
+    position: 'absolute',
+    right: '3px',
+    top: '-3px',
   },
 }
 
 class Phases extends React.Component {
   constructor(props) {
     super(props)
-    this.onChange = this.onChange.bind(this)
-    this.addPhase = this.addPhase.bind(this)
-    this.state = {
-      phases: [],
-    }
-    this.baseEditorState = {
-      editorState: EditorState.createEmpty(),
-      plugins: [createMarkdownPlugin()],
-    }
-  }
+    const { phases } = props
+    let initialEditorStates = []
 
-  componentDidMount() {
-    // const data = require('electron').remote.getCurrentWindow().epicData
-    // const { phases } = data
-    // this.setState({ phases: phases })
+    this.onChange = this.onChange.bind(this)
+    this.createPhase = this.createPhase.bind(this)
+
+    Array(phases.length).forEach(() => {
+      initialEditorStates.push(emptyState)
+    })
+
+    this.state = {
+      editorStates: initialEditorStates,
+    }
+    this._editors = []
   }
 
   onChange(editorState, index) {
-    const { phases } = this.state
-    const currentPhase = phases[index]
-    const newPhase = {
-      ...currentPhase,
-      editorState: editorState,
-    }
-    const newPhases = [
-      ...phases.slice(0, index),
-      newPhase,
-      ...phases.slice(index + 1),
-    ]
-    this.setState({ phases: newPhases })
+    const { editorStates } = this.state
+    const newEditorStates = [...editorStates]
+    newEditorStates[index] = editorState
+    this.setState({ editorStates: newEditorStates })
+
+    const { setEpicPhase, globalUi } = this.props
+    const { selectedEpic } = globalUi
+    const rawEditorState = convertToRaw(editorState.getCurrentContent())
+    setEpicPhase({ selectedEpic, index, content: rawEditorState })
   }
 
-  addPhase(e) {
-    const { phases } = this.state
-    const newPhases = [...phases, this.baseEditorState]
-    this.setState({ phases: newPhases })
+  deletePhase(e, index) {
+    e.stopPropagation()
+
+    const { deletePhase, globalUi } = this.props
+    const { selectedEpic } = globalUi
+    deletePhase({ selectedEpic, index })
+  }
+
+  createPhase(e) {
+    const { editorStates } = this.state
+    const newEditorStates = [...editorStates, emptyState]
+    this.setState({ editorStates: newEditorStates })
+
+    const { createPhase, globalUi } = this.props
+    const { selectedEpic } = globalUi
+    createPhase({ selectedEpic })
   }
 
   render() {
-    const { classes } = this.props
-    const { editorState, plugins, phases } = this.state
+    const { classes, phases } = this.props
+    const { editorStates } = this.state
+    let editorState
 
     return (
       <div className={classes.root}>
         <h2 className={classes.title}>Phases</h2>
         {phases &&
           phases.map((phase, index) => {
+            if (phase) {
+              editorState = EditorState.createWithContent(convertFromRaw(phase))
+            } else {
+              editorState = emptyState
+            }
+            const selection = this.state.editorStates[index]
+              ? this.state.editorStates[index].getSelection()
+              : emptyState.getSelection()
+
             return (
               <div
                 className={classes.editorContainer}
                 onClick={this.onContainerClick}
                 key={index}
               >
+                <span
+                  onClick={e => {
+                    this.deletePhase(e, index)
+                  }}
+                  className={classes.deleteButton}
+                >
+                  &times;
+                </span>
                 <Editor
-                  editorState={phase.editorState}
+                  editorState={EditorState.acceptSelection(
+                    editorState,
+                    selection,
+                  )}
                   onChange={e => this.onChange(e, index)}
-                  plugins={phase.plugins}
+                  plugins={plugins}
                 />
               </div>
             )
           })}
-        <Button variant="contained" color="primary" onClick={this.addPhase}>
+        <Button
+          variant="contained"
+          className={classes.addButton}
+          onClick={this.createPhase}
+        >
           <Icon>add</Icon> New Phase
         </Button>
       </div>
@@ -100,4 +157,20 @@ class Phases extends React.Component {
   }
 }
 
-export default withStyles(styles)(Phases)
+const mapDispatchToProps = {
+  createPhase,
+  deletePhase,
+  setEpicPhase,
+}
+
+const mapStateToProps = state => ({
+  globalUi: state.globalUi,
+  phases: state.epics[state.globalUi.selectedEpic].phases,
+})
+
+export default withStyles(styles)(
+  connect(
+    mapStateToProps,
+    mapDispatchToProps,
+  )(Phases),
+)

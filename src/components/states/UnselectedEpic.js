@@ -27,7 +27,7 @@ const styles = {
   header: {
     gridRowEnd: 2,
     gridRowStart: 3,
-  }
+  },
 }
 
 const UnselectedEpic = props => {

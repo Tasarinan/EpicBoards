@@ -14,11 +14,11 @@ const emptyState = EditorState.createEmpty()
 
 const styles = {
   root: {
-    backgroundColor: 'rgba(100, 149, 237, 0.4)',
+    backgroundColor: 'rgba(196, 79, 71, 0.5)',
     borderLeft: '1px solid black',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
   },
   title: {
     margin: 0,
@@ -26,12 +26,14 @@ const styles = {
     padding: '6px 0',
   },
   editorContainer: {
-    flexGrow: 1,
-    padding: '4px',
-    backgroundColor: '#f3f3f3',
+    backgroundColor: '#CDD7D6',
+    borderRadius: '4px',
     cursor: 'text',
+    flexGrow: 1,
     height: '1px',
+    margin: '0 6px 6px',
     overflowY: 'scroll',
+    padding: '8px',
   },
 }
 
