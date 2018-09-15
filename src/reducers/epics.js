@@ -20,6 +20,8 @@ const EpicReducer = (state = initialState, { type, payload }) => {
           ...emptyEpic,
         },
       ]
+    case 'SET_EPICS':
+      return payload
     case 'DELETE_EPIC':
       return update(state, {
         $splice: [[payload, 1]],

@@ -7,7 +7,6 @@ import { setEpicTitle } from '../../actions/'
 const styles = {
   root: {
     backgroundColor: 'rgba(255,0,0,0.2)',
-    borderBottom: '1px solid black',
     height: '100%',
     width: '100%',
   },

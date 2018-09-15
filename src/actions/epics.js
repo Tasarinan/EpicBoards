@@ -4,6 +4,7 @@ import { toggleDrawer } from './globalUi'
 
 export const createEpicRecord = createAction('CREATE_EPIC_RECORD')
 export const deleteEpic = createAction('DELETE_EPIC')
+export const setEpics = createAction('SET_EPICS')
 export const setSelectedEpic = createAction('SET_SELECTED_EPIC')
 
 export function createEpic() {

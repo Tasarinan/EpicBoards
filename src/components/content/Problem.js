@@ -15,7 +15,6 @@ const emptyState = EditorState.createEmpty()
 const styles = {
   root: {
     backgroundColor: 'rgba(196, 79, 71, 0.5)',
-    borderLeft: '1px solid black',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
@@ -23,13 +22,13 @@ const styles = {
   title: {
     margin: 0,
     textAlign: 'center',
-    padding: '6px 0',
   },
   editorContainer: {
     backgroundColor: '#CDD7D6',
     borderRadius: '4px',
     cursor: 'text',
     flexGrow: 1,
+    fontFamily: 'Roboto',
     height: '1px',
     margin: '0 6px 6px',
     overflowY: 'scroll',

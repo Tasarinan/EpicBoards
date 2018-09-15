@@ -17,14 +17,12 @@ const emptyState = EditorState.createEmpty()
 const styles = {
   root: {
     backgroundColor: 'rgba(27, 132, 131, 0.5)',
-    borderLeft: '1px solid black',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
   },
   title: {
     margin: 0,
-    padding: '6px 0',
     textAlign: 'center',
   },
   editorContainer: {

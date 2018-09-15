@@ -15,18 +15,15 @@ const emptyState = EditorState.createEmpty()
 const styles = {
   root: {
     backgroundColor: 'rgba(255, 152, 0, 0.4)',
-    borderLeft: '1px solid black',
     display: 'flex',
     flexDirection: 'column',
     height: '100%',
   },
   title: {
     margin: 0,
-    padding: '6px 0',
     textAlign: 'center',
   },
   contentContainer: {
-    borderBottom: '1px solid black',
     cursor: 'text',
     display: 'flex',
     flexDirection: 'column',

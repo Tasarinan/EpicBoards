@@ -16,7 +16,6 @@ import {
 const styles = {
   root: {
     backgroundColor: 'rgba(79, 166, 156, 0.4)',
-    borderTop: '1px solid black',
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
@@ -24,7 +23,6 @@ const styles = {
   title: {
     margin: 0,
     textAlign: 'center',
-    padding: '6px 0',
   },
   referencesContainer: {
     flexGrow: 1,

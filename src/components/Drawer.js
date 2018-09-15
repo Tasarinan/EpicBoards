@@ -13,8 +13,17 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
 import AddIcon from '@material-ui/icons/Add'
 import DeleteIcon from '@material-ui/icons/Delete'
 import SettingsIcon from '@material-ui/icons/Settings'
+import SaveIcon from '@material-ui/icons/Save'
+import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 
-import { toggleDrawer, createEpic, selectEpic, deleteEpic } from '../actions/'
+import {
+  toggleDrawer,
+  createEpic,
+  selectEpic,
+  deleteEpic,
+  saveEpics,
+  importEpics,
+} from '../actions/'
 
 const styles = theme => ({
   root: {
@@ -28,6 +37,8 @@ class DrawerComponent extends React.Component {
     super(props)
     this.createEpic = this.createEpic.bind(this)
     this.onClose = this.onClose.bind(this)
+    this.saveEpics = this.saveEpics.bind(this)
+    this.importEpics = this.importEpics.bind(this)
   }
 
   onClose() {
@@ -48,6 +59,16 @@ class DrawerComponent extends React.Component {
   deleteEpic(index) {
     const { deleteEpic } = this.props
     deleteEpic(index)
+  }
+
+  saveEpics() {
+    const { saveEpics } = this.props
+    saveEpics()
+  }
+
+  importEpics() {
+    const { importEpics } = this.props
+    importEpics()
   }
 
   render() {
@@ -97,6 +118,18 @@ class DrawerComponent extends React.Component {
           component="nav"
           subheader={<ListSubheader component="div">Settings</ListSubheader>}
         >
+          <ListItem button onClick={this.importEpics}>
+            <ListItemIcon>
+              <CloudDownloadIcon />
+            </ListItemIcon>
+            <ListItemText primary="Import Epics" />
+          </ListItem>
+          <ListItem button onClick={this.saveEpics}>
+            <ListItemIcon>
+              <SaveIcon />
+            </ListItemIcon>
+            <ListItemText primary="Save Epics" />
+          </ListItem>
           <ListItem button>
             <ListItemIcon>
               <SettingsIcon />
@@ -113,6 +146,8 @@ const mapDispatchToProps = {
   createEpic,
   deleteEpic,
   selectEpic,
+  saveEpics,
+  importEpics,
   toggleDrawer,
 }
 
