@@ -1,52 +1,51 @@
 const fs = require('fs')
 const { dialog } = require('electron').remote
 
+import { createAction } from 'redux-actions'
+
 import { setEpics } from './'
 
 export function saveEpics() {
   return async function(dispatch, getState) {
-    dialog.showSaveDialog(
-      {
-        title: 'Save Epics',
-        defaultPath: 'epics.json',
-      },
-      path => {
-        if (!path) return
+    const { epics, appSettings } = getState()
+    const { saveLocation } = appSettings
+    if (!saveLocation) return 'AN ERROR'
 
-        const epics = getState().epics
-        const serializedEpics = JSON.stringify(epics)
-        fs.writeFile(path, serializedEpics, err => {
-          if (err) {
-            console.error(err)
-            return
-          }
-          console.log('File has been created')
-        })
-      },
-    )
+    const serializedEpics = JSON.stringify(epics)
+    fs.writeFile(path, serializedEpics, err => {
+      if (err) {
+        console.error(err)
+        return
+      }
+      console.log('Epics have been saved')
+    })
   }
 }
 
 export function importEpics() {
   return async function dispatch(dispatch, getState) {
-    dialog.showOpenDialog(
+    const { appSettings } = getState()
+    const { saveLocation } = appSettings
+    if (!saveLocation) return 'AN ERROR'
+
+    const epics = fs.readFileSync(saveLocation, { encoding: 'utf8' })
+    const parsedEpics = JSON.parse(epics)
+    dispatch(setEpics(parsedEpics))
+  }
+}
+
+export function startSaveLocationFlow() {
+  return async function dispatch(dispatch, getState) {
+    dialog.showSaveDialog(
       {
-        title: 'Select an Epic JSON',
-        defaultPath: 'Epics.json',
-        filters: [
-          {
-            name: 'JSON',
-            extensions: ['json'],
-          },
-        ],
-        properties: ['openFile'],
+        title: 'Set Location',
+        defaultPath: 'epics.json',
       },
-      paths => {
-        const path = paths[0]
-        const epics = fs.readFileSync(path, { encoding: 'utf8'})
-        const parsedEpics = JSON.parse(epics)
-        dispatch(setEpics(parsedEpics))
+      path => {
+        dispatch(setSaveLocation(path))
       },
     )
   }
 }
+
+export const setSaveLocation = createAction('SET_SAVE_LOCATION')

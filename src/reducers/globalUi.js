@@ -1,5 +1,6 @@
 const initialState = {
   drawerOpen: false,
+  settingsOpen: false,
   selectedEpic: 0,
   referenceLabel: '',
   referenceUrl: '',
@@ -7,7 +8,7 @@ const initialState = {
 
 const GlobalUiReducer = (state = initialState, { type, payload }) => {
   switch (type) {
-    case 'SET_DRAWER':
+    case 'TOGGLE_DRAWER':
       return {
         ...state,
         drawerOpen: payload,
@@ -26,6 +27,11 @@ const GlobalUiReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         selectedEpic: payload,
+      }
+    case 'TOGGLE_SETTINGS_MODAL':
+      return {
+        ...state,
+        settingsOpen: payload,
       }
     default:
       return state

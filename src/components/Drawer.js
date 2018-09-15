@@ -17,12 +17,13 @@ import SaveIcon from '@material-ui/icons/Save'
 import CloudDownloadIcon from '@material-ui/icons/CloudDownload'
 
 import {
-  toggleDrawer,
   createEpic,
-  selectEpic,
   deleteEpic,
-  saveEpics,
   importEpics,
+  saveEpics,
+  selectEpic,
+  toggleDrawer,
+  toggleSettings,
 } from '../actions/'
 
 const styles = theme => ({
@@ -36,9 +37,10 @@ class DrawerComponent extends React.Component {
   constructor(props) {
     super(props)
     this.createEpic = this.createEpic.bind(this)
-    this.onClose = this.onClose.bind(this)
-    this.saveEpics = this.saveEpics.bind(this)
     this.importEpics = this.importEpics.bind(this)
+    this.onClose = this.onClose.bind(this)
+    this.openSettings = this.openSettings.bind(this)
+    this.saveEpics = this.saveEpics.bind(this)
   }
 
   onClose() {
@@ -69,6 +71,12 @@ class DrawerComponent extends React.Component {
   importEpics() {
     const { importEpics } = this.props
     importEpics()
+  }
+
+  openSettings() {
+    const { toggleDrawer, toggleSettings } = this.props
+    toggleDrawer(false)
+    toggleSettings(true)
   }
 
   render() {
@@ -130,7 +138,7 @@ class DrawerComponent extends React.Component {
             </ListItemIcon>
             <ListItemText primary="Save Epics" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={this.openSettings}>
             <ListItemIcon>
               <SettingsIcon />
             </ListItemIcon>
@@ -145,10 +153,11 @@ class DrawerComponent extends React.Component {
 const mapDispatchToProps = {
   createEpic,
   deleteEpic,
-  selectEpic,
-  saveEpics,
   importEpics,
+  saveEpics,
+  selectEpic,
   toggleDrawer,
+  toggleSettings,
 }
 
 const mapStateToProps = state => ({

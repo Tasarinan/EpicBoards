@@ -42,6 +42,10 @@ const styles = {
       backgroundColor: 'rgba(46, 158, 46, 0.9)',
     },
   },
+  icon: {
+    fontSize: '18px',
+    lineHeight: '16px',
+  },
   deleteButton: {
     cursor: 'pointer',
     position: 'absolute',
@@ -145,10 +149,11 @@ class Phases extends React.Component {
           })}
         <Button
           variant="contained"
+          size="small"
           className={classes.addButton}
           onClick={this.createPhase}
         >
-          <Icon>add</Icon> New Phase
+          <Icon className={classes.icon}>add</Icon> New Phase
         </Button>
       </div>
     )

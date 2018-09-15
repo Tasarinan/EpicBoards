@@ -9,7 +9,7 @@ import createElectronStorage from 'redux-persist-electron-storage'
 import { PersistGate } from 'redux-persist/integration/react'
 
 import rootReducer from './reducers'
-import App from './components/App'
+import App from './App'
 
 const persistConfig = {
   key: 'root',
