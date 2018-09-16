@@ -61,7 +61,6 @@ class Notification extends React.Component {
   }
 }
 
-
 const mapDispatchToProps = {
   toggleNotification,
 }
@@ -76,4 +75,3 @@ export default withStyles(styles)(
     mapDispatchToProps,
   )(Notification),
 )
-

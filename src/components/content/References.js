@@ -16,9 +16,9 @@ import {
 const styles = {
   root: {
     backgroundColor: 'rgba(79, 166, 156, 0.4)',
-    height: '100%',
     display: 'flex',
     flexDirection: 'column',
+    height: '100%',
   },
   title: {
     margin: 0,
@@ -29,6 +29,7 @@ const styles = {
   },
   inputContainer: {
     height: '36px',
+    padding: '6px',
   },
   textField: {
     flexGrow: 1,
@@ -37,20 +38,23 @@ const styles = {
     display: 'flex',
   },
   bootstrapRoot: {
-    height: '36px',
-    padding: 0,
-    flexGrow: 1,
-    borderRadius: 4,
     backgroundColor: '#fff',
     border: '1px solid #ced4da',
+    borderRadius: 4,
+    flexGrow: 1,
+    height: '36px',
+    padding: 0,
     'label + &': {
       marginTop: 0,
     },
   },
+  bootstrapInput: {
+    padding: '6px 4px',
+  },
   button: {
+    color: 'green',
     height: '36px',
     width: '36px',
-    color: 'green',
   },
 }
 
@@ -87,7 +91,8 @@ class References extends React.Component {
   }
 
   openPage(url) {
-    window.open(url, '_blank')
+    let shell = require('electron').shell
+    shell.openExternal(url)
   }
 
   submitReference(e) {
@@ -98,7 +103,7 @@ class References extends React.Component {
 
   render() {
     const { classes, globalUi, references } = this.props
-    const { labelInput, urlInput } = globalUi
+    const { referenceLabel, referenceUrl } = globalUi
 
     return (
       <div className={classes.root}>
@@ -122,7 +127,7 @@ class References extends React.Component {
             <TextField
               id="label"
               className={classes.textField}
-              value={labelInput}
+              value={referenceLabel}
               placeholder="Label"
               onChange={this.onLabelChange}
               onKeyDown={this.onKeyDown}
@@ -130,13 +135,14 @@ class References extends React.Component {
                 disableUnderline: true,
                 classes: {
                   root: classes.bootstrapRoot,
+                  input: classes.bootstrapInput,
                 },
               }}
             />
             <TextField
               id="url"
               className={classes.textField}
-              value={urlInput}
+              value={referenceUrl}
               placeholder="URL"
               onChange={this.onUrlChange}
               onKeyDown={this.onKeyDown}
@@ -144,6 +150,7 @@ class References extends React.Component {
                 disableUnderline: true,
                 classes: {
                   root: classes.bootstrapRoot,
+                  input: classes.bootstrapInput,
                 },
               }}
             />

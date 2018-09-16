@@ -23,7 +23,7 @@ const styles = {
     width: '600px',
     '&:focus': {
       outline: 'none',
-    }
+    },
   },
   title: {
     margin: '16px auto',
@@ -62,7 +62,9 @@ class SettingsComponent extends React.Component {
     return (
       <Modal open={settingsOpen || false} onClose={() => toggleSettings(false)}>
         <Paper className={classes.paper}>
-          <Typography variant="headline" className={classes.title}>Settings</Typography>
+          <Typography variant="headline" className={classes.title}>
+            Settings
+          </Typography>
           <div className={classes.settingsRow}>
             <Button
               variant="contained"

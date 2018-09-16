@@ -32,6 +32,9 @@ const styles = {
   grow: {
     flexGrow: 1,
   },
+  saveButton: {
+    marginRight: '-18px',
+  },
   grey: {
     color: '#ccc',
   },
@@ -64,10 +67,16 @@ class Header extends React.Component {
     const { saving } = globalUi
 
     if (saving) {
-      return <CircularProgress className={classes.grey} size={30} />
+      return (
+        <CircularProgress className={classes.grey} size={20} thickness={4.8} />
+      )
     } else {
       return (
-        <IconButton aria-label="Save" onClick={this.save}>
+        <IconButton
+          aria-label="Save"
+          onClick={this.save}
+          className={classes.saveButton}
+        >
           <SaveIcon className={classes.grey} />
         </IconButton>
       )
