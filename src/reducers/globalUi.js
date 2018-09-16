@@ -1,6 +1,7 @@
 const initialState = {
   drawerOpen: false,
   settingsOpen: false,
+  saving: false,
   selectedEpic: 0,
   referenceLabel: '',
   referenceUrl: '',
@@ -32,6 +33,11 @@ const GlobalUiReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         settingsOpen: payload,
+      }
+    case 'TOGGLE_SAVING':
+      return {
+        ...state,
+        saving: payload,
       }
     default:
       return state

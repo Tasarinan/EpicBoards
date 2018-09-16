@@ -1,14 +1,18 @@
+const { ipcRenderer } = require('electron')
+
 import React from 'react'
 import { connect } from 'react-redux'
 
-import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
+import SaveIcon from '@material-ui/icons/Save'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import { withStyles } from '@material-ui/core/styles'
 
-import { toggleDrawer } from '../actions/'
+import { toggleDrawer, saveEpics } from '../actions/'
 
 const styles = {
   root: {
@@ -23,6 +27,13 @@ const styles = {
   },
   toolBar: {
     backgroundColor: 'rgba(63, 81, 181, 0.9)',
+    display: 'flex',
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  grey: {
+    color: '#ccc',
   },
 }
 
@@ -30,6 +41,12 @@ class Header extends React.Component {
   constructor(props) {
     super(props)
     this.onClickMenuIcon = this.onClickMenuIcon.bind(this)
+    this.save = this.save.bind(this)
+    const Header = this
+
+    ipcRenderer.on('save-epics', (event, data) => {
+      Header.save()
+    })
   }
 
   onClickMenuIcon() {
@@ -37,8 +54,28 @@ class Header extends React.Component {
     toggleDrawer(true)
   }
 
+  save() {
+    const { saveEpics } = this.props
+    saveEpics()
+  }
+
+  renderSave() {
+    const { classes, globalUi, saveEpics } = this.props
+    const { saving } = globalUi
+
+    if (saving) {
+      return <CircularProgress className={classes.grey} size={30} />
+    } else {
+      return (
+        <IconButton aria-label="Save" onClick={this.save}>
+          <SaveIcon className={classes.grey} />
+        </IconButton>
+      )
+    }
+  }
+
   render() {
-    const { classes, toggleDrawer } = this.props
+    const { classes, toggleDrawer, globalUi, saveEpics } = this.props
 
     return (
       <div className={classes.root}>
@@ -52,9 +89,14 @@ class Header extends React.Component {
             >
               <MenuIcon />
             </IconButton>
-            <Typography variant="title" color="inherit">
+            <Typography
+              variant="title"
+              color="inherit"
+              className={classes.grow}
+            >
               Epic Epics
             </Typography>
+            {this.renderSave()}
           </Toolbar>
         </AppBar>
       </div>
@@ -64,13 +106,16 @@ class Header extends React.Component {
 
 const mapDispatchToProps = {
   toggleDrawer,
+  saveEpics,
 }
+
+const mapStateToProps = state => ({
+  globalUi: state.globalUi,
+})
 
 export default withStyles(styles)(
   connect(
-    () => {
-      return {}
-    },
+    mapStateToProps,
     mapDispatchToProps,
   )(Header),
 )

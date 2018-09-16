@@ -3,6 +3,7 @@ require('electron-reload')(__dirname)
 const path = require('path')
 const { app, BrowserWindow } = require('electron')
 const electron = require('electron')
+const { ipcMain } = require('electron')
 const Store = require('electron-store')
 
 let win
@@ -24,6 +25,12 @@ function createWindow() {
   win.on('closed', () => {
     win = null
   })
+
+  win.saveEpics = () => {
+    win.webContents.send('save-epics')
+  }
+
+  require('./menu.js')
 }
 
 app.on('ready', createWindow)
