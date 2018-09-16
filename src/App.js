@@ -1,11 +1,11 @@
 import React from 'react'
 import { withStyles } from '@material-ui/core/styles'
 
-import Content from './Components/Content'
-import Drawer from './Components/Drawer'
-import Header from './Components/Header'
-import Settings from './Components/Settings'
-import Notification from './Components/Notification'
+import Content from './components/Content'
+import Drawer from './components/Drawer'
+import Header from './components/Header'
+import Settings from './components/Settings'
+import Notification from './components/Notification'
 
 const styles = {
   root: {

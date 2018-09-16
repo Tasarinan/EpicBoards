@@ -1,12 +1,13 @@
 {
   "name": "Epic_Epics",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "Easily manage epics for agile teams",
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron -r babel-register .",
     "pack": "electron-builder --dir",
+    "dist-all": "electron-builder build --mac --win --linux",
     "dist-mac": "electron-builder build --mac",
     "dist-win": "electron-builder build --win",
     "dist-linux": "electron-builder build --linux"
