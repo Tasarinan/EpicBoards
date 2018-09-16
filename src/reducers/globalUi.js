@@ -1,46 +1,29 @@
 const initialState = {
   drawerOpen: false,
-  settingsOpen: false,
-  saving: false,
-  selectedEpic: 0,
+  notificationContent: '',
+  notificationOpen: false,
   referenceLabel: '',
   referenceUrl: '',
+  saving: false,
+  selectedEpic: 0,
+  settingsOpen: false,
 }
 
 const GlobalUiReducer = (state = initialState, { type, payload }) => {
-  switch (type) {
-    case 'TOGGLE_DRAWER':
-      return {
-        ...state,
-        drawerOpen: payload,
-      }
-    case 'SET_REFERENCE_LABEL_INPUT':
-      return {
-        ...state,
-        referenceLabel: payload,
-      }
-    case 'SET_REFERENCE_URL_INPUT':
-      return {
-        ...state,
-        referenceUrl: payload,
-      }
-    case 'SET_SELECTED_EPIC':
-      return {
-        ...state,
-        selectedEpic: payload,
-      }
-    case 'TOGGLE_SETTINGS_MODAL':
-      return {
-        ...state,
-        settingsOpen: payload,
-      }
-    case 'TOGGLE_SAVING':
-      return {
-        ...state,
-        saving: payload,
-      }
-    default:
-      return state
+  const actionMap = {
+    SET_NOTICATION_CONTENT: 'notificationContent',
+    SET_REFERENCE_LABEL_INPUT: 'referenceLabel',
+    SET_REFERENCE_URL_INPUT: 'referenceUrl',
+    SET_SELECTED_EPIC: 'selectedEpic',
+    TOGGLE_DRAWER: 'drawerOpen',
+    TOGGLE_NOTIFICATION: 'notificationOpen',
+    TOGGLE_SAVING: 'saving',
+    TOGGLE_SETTINGS_MODAL: 'settingsOpen',
+  }
+
+  return {
+    ...state,
+    [actionMap[type]]: payload,
   }
 }
 

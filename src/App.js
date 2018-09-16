@@ -5,6 +5,7 @@ import Content from './Components/Content'
 import Drawer from './Components/Drawer'
 import Header from './Components/Header'
 import Settings from './Components/Settings'
+import Notification from './Components/Notification'
 
 const styles = {
   root: {
@@ -21,6 +22,7 @@ class App extends React.Component {
         <Header />
         <Drawer />
         <Content />
+        <Notification />
         <Settings />
       </div>
     )

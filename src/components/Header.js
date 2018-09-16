@@ -42,10 +42,10 @@ class Header extends React.Component {
     super(props)
     this.onClickMenuIcon = this.onClickMenuIcon.bind(this)
     this.save = this.save.bind(this)
-    const Header = this
+    const scope = this
 
     ipcRenderer.on('save-epics', (event, data) => {
-      Header.save()
+      scope.save()
     })
   }
 
