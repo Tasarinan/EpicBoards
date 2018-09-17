@@ -12,7 +12,12 @@ import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import { withStyles } from '@material-ui/core/styles'
 
-import { toggleDrawer, saveEpics } from '../actions/'
+import {
+  toggleDrawer,
+  saveEpics,
+  toggleNotification,
+  setNotificationContent,
+} from '../actions/'
 
 const styles = {
   root: {
@@ -50,6 +55,26 @@ class Header extends React.Component {
     ipcRenderer.on('save-epics', (event, data) => {
       scope.save()
     })
+  }
+
+  componentDidMount() {
+    const { toggleNotification, setNotificationContent } = this.props
+    const currentVersion = process.env.npm_package_version
+
+    fetch('https://api.github.com/repos/xhocquet/EpicBoards/releases')
+      .then(response => {
+        return response.json()
+      })
+      .then(myJson => {
+        const latestVersion = myJson[0]['name'].slice(1)
+
+        if (currentVersion !== latestVersion) {
+          setNotificationContent('There is a new version available!')
+          toggleNotification(true)
+        } else {
+          console.log("Up to date!")
+        }
+      })
   }
 
   onClickMenuIcon() {
@@ -115,6 +140,8 @@ class Header extends React.Component {
 
 const mapDispatchToProps = {
   toggleDrawer,
+  toggleNotification,
+  setNotificationContent,
   saveEpics,
 }
 
